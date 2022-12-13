@@ -1,0 +1,10 @@
+---
+- name: create new file in node
+  hosts: all
+  become: no
+  tasks:
+    - name: create a file in node
+      ansible.builtin.file:
+        path: /tmp/1.txt
+        state: touch
+
