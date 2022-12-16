@@ -1,0 +1,24 @@
+---yml
+- name: install game of life package
+  hosts: all
+  become: yes
+  tasks:  
+    - name: update ubuntu and install java 8
+      ansible.builtin.apt:
+        name: openjdk-8-jdk
+        upadate_cache: true
+        state: present       
+      name: install tomcat server
+      ansible.builtin.apt:
+        name: tomcat9
+        state: present
+      name: download the game_of_life package  
+      ansibel.builtin.get_url:
+        url: https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/gameoflife.war
+        dest: /var/lib/tomcat9/webapps/gameoflife.war
+      name: restart the service
+      ansible.builtin.systemd:
+        enable: yes
+        name: tomcat9
+        state: restart
+      
