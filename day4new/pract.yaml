@@ -2,14 +2,13 @@
 - name: install testing app
   hosts: app
   become: yes
-  tasks:
-    vars:
-      utilities:
-        - nano
-        - tree
-        - git
-
-    name: install some important app
-    ansible.builtin.apt:
-      name: "{{ utilities }}"
-      state: present
+  vars:
+    utilities:
+      - nano
+      - tree
+      - git
+  tasks:    
+    - name: install some important app
+      ansible.builtin.apt:
+        name: "{{ utilities }}"
+        state: present
