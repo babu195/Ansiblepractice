@@ -1,0 +1,15 @@
+---
+- name: install testing app
+  hosts: app
+  become: yes
+  tasks:
+    vars:
+      utilities:
+        - nano
+        - tree
+        - git
+
+    name: install some important app
+    ansible.builtin.apt:
+      name: "{{ utilities }}"
+      state: present
