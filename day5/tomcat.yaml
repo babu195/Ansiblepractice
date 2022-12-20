@@ -1,0 +1,21 @@
+---
+- name: install tomcat9 server
+  hosts: application
+  become: yes
+  vars:
+    tomcat_name: tomcat
+    tomcat_home: /opt/tomcat
+    tomcat_shell: /bin/false
+  tasks:
+    - name: update ubuntu 20.04 and install java 11
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        update_cache: yes
+        state: present
+    - name: creat a system user
+      ansible.builtin.user:
+        name: "{{ tomcat_name }}"
+        home: "{{ tomcat_home }}"
+        shell: "{{ tomcat_shell }}"
+
+      
