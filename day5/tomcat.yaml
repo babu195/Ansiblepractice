@@ -28,5 +28,18 @@
         src: "{{ tomcat_download_path }}"
         dest: "{{ tomcat_home }}"
         remote_src: yes
-
+    - name: create a symbolic Link
+      ansible.builtin.file:
+        src: "{{ tomcat_home }}/apache-tomcat-9.0.70"
+        dest: "{{ tomcat_home }}/latest"
+        owner: "{{ tomcat_name }}"
+        group: "{{ tomcat_name }}"
+        state: Link
+    - name: Recursively change ownership of a directory
+      ansible.builtin.file:
+        path: "{{ tomcat_home }}"
+        state: directory
+        recurse: yes
+        owner: "{{ tomcat_name }}"
+        group: "{{ tomcat_name }}"
       
