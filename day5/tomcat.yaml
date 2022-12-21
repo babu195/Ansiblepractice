@@ -34,7 +34,7 @@
         dest: "{{ tomcat_home }}/latest"
         owner: "{{ tomcat_name }}"
         group: "{{ tomcat_name }}"
-        state: Link
+        state: link
     - name: Recursively change ownership of a directory
       ansible.builtin.file:
         path: "{{ tomcat_home }}"
