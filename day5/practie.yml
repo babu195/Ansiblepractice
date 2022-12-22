@@ -1,0 +1,45 @@
+---
+- name: install tomcat9 in ubutu 20.04
+  hosts: application
+  become: yes
+  vars:
+    java_package: openjdk-8-jdk
+    tocat_name: tomcat
+    tomcat_home_dir: /opt/tomcat
+    tomcat_shell: /bin/false
+    tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
+    tomcat_path: /tmp/apache-tomcat-9.0.70.tar.gz
+  tasks: 
+    - name: update ubuntu and install java 8
+      ansible.builtin.apt:
+        name: "{{ java_package }}"
+        update_cache: yes
+        state: present
+    - name: create the useradd
+      ansible.builtin.user:
+        name: "{{ tomcat_name }}"
+        home: "{{ tomcat_home_dir }}"
+        shell: "{{ tomcat_shell }}"
+    - name: download tar file of tomcat
+      ansible.builtin.get_url:
+        url: "{{ tomcat_url }}"
+        dest: "{{ tomcat_path }}"
+    - name: unarchive the downloaded file
+      ansible.builtin.unarchive:
+        src: "{{ tomcat_path }}"
+        dest: "{{ tomcat_home_dir }}"
+        remote_src: yes
+    - name: create a symbolic link
+      ansible.builtin.file:
+        src: "{{ tomcat_home_dir }}/apache-tomcat-9.0.70"
+        dest: "{{ tomcat_home_dir }}/latest"
+        owner: "{{ tomcat_name }}"
+        group: "{{ tomcat_name }}"
+        state: link
+    - name: Recursively change ownership of a tomcat directory
+      ansible.builtin.file:
+        path: "{{ tomcat_home_dir }}"
+        state: directory
+        recurse: yes
+        owner: "{{ tomcat_name }}"
+        group: "{{ tomcat_name }}"
