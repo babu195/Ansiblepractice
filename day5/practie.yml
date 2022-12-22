@@ -4,7 +4,7 @@
   become: yes
   vars:
     java_package: openjdk-8-jdk
-    tomat_name: tomcat
+    tomcat_name: tomcat
     tomcat_home_dir: /opt/tomcat
     tomcat_shell: /bin/false
     tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
