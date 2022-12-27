@@ -1,0 +1,11 @@
+---
+- name: install openjdk8 file
+  hosts: all
+  become: yes
+  tasks:
+    - name: update ubuntu and install java_8
+      ansible.builtin.apt:
+        name: openjdk-8-jdk
+        update_cache: yes
+        state: present
+        

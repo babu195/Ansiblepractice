@@ -1,6 +1,6 @@
 {
     "yaml.schemas": {
         "kubernetes": ".yaml",
-        "https://json.schemastore.org/eslintrc.json": "file:///d%3A/Love/Practice/Ansible/day%203/deploy.yml"
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///d%3A/Love/Practice/Ansible/day%203/deploy.yml"
     }
 }

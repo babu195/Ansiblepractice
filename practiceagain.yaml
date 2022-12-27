@@ -1,0 +1,45 @@
+---
+- name: install tomcat9 server
+  hosts: dev
+  become: yes
+  vars:
+    java_package: openjdk-11-jdk
+    tomcat_user: tomcat
+    tomcat_shell: /bin/false
+    tomcat_home: /opt/tomcat
+    tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
+    tomcat_path: apache-tomcat-9.0.70.tar.gz
+  tasks:
+    - name: update ubuntu and install java11
+      ansible.builtin.apt:
+        name: "{{ java_package }}"
+        update_cache: yes
+        state: present
+    - name: Add user to the home directory
+      ansible.builtin.user:
+        name: "{{ tomcat_user }}"
+        home: "{{ tomcat_home }}"
+        shell: "{{ tomcat_shell }}"
+    - name: download the tar file
+      ansible.builtin.get_url:
+        url: "{{ tomcat_url }}"
+        dest: "{{ tomcat_path }}"
+    - name: Extract the file
+      ansible.builtin.unarchive:
+        src: "{{ tomcat_path }}"
+        dest: "{{ tomcat_home }}"
+        remote_src: yes
+    - name: Create a symbolic link
+      ansible.builtin.file:
+        src: "{{ tomcat_home }}/apache-tomcat-9.0.70"
+        dest: "{{ tomcat_home }}/latest"
+        owner: "{{ tomcat_user }}"
+        group: "{{ tomcat_user }}"
+        state: link
+    - name: Recursively change ownership of a directory
+      ansible.builtin.file:
+        path: "{{ tomcat_home }}"
+        state: directory
+        recurse: yes
+        owner: "{{ tomcat_user }}"
+        group: "{{ tomcat_user }}"

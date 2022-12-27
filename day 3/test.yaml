@@ -1,0 +1,26 @@
+---
+- name: print web pase
+  hosts: all
+  become: yes
+  tasks:
+    - name: update ubuntu and install apache2
+      ansible.builtin.apt:
+        name: apache2
+        update_cache: yes
+        state: present
+    - name: install php package
+      ansible.builtin.apt:
+        name: 
+          - php
+          - libapache2-mod-php
+          - php-mysql
+        state: present  
+    - name: create a file with some contant 
+      ansible.builtin.copy:
+        src: info.php
+        dest: /var/www/html/info.html   
+    - name: enable service and start 
+      ansible.builtin.systemd:
+        name: apache2
+        enabled: yes
+        state: start 
