@@ -8,7 +8,7 @@
     tomcat_shell: /bin/false
     tomcat_home: /opt/tomcat
     tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
-    tomcat_path: apache-tomcat-9.0.70.tar.gz
+    tomcat_path: /tmp/apache-tomcat-9.0.70.tar.gz
   tasks:
     - name: update ubuntu and install java11
       ansible.builtin.apt:
